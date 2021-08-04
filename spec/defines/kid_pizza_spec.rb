@@ -2,6 +2,37 @@
 
 require 'spec_helper'
 
+RSpec.shared_examples 'a kid pizza' do
+  it { is_expected.to compile }
+
+  it { is_expected.to contain_class('Settings')
+  }
+  
+  it { is_expected.to contain_pizza_profile__kid_pizza('namevar')
+    .with('dough'  => 'white')
+    .with('cheese' => 'mozzarella')
+  }
+  
+  it { is_expected.to contain_crust('namevar/medium_wholesome_thin_crust')
+    .with('ensure' => 'baked')
+    .with('type'   => 'thin')
+    .with('dough'  => 'wholesome')
+    .that_comes_before('Tomato_sauce[namevar/thick_cristal]')
+  }
+  
+  it { is_expected.to contain_tomato_sauce('namevar/thick_cristal')
+    .with('ensure'    => 'present')
+    .with('type'      => 'cristal')
+    .with('composure' => 'thick')
+    .that_comes_before('Cheese[namevar/a_lot_of_mozzarella]')
+  }
+  
+  it { is_expected.to contain_cheese('namevar/a_lot_of_mozzarella')
+    .with('ensure' => 'present')
+    .with('type'   => 'mozzarella')
+  }
+end
+
 describe 'pizza_profile::kid_pizza' do
   let(:title) { 'namevar' }
 
@@ -20,6 +51,8 @@ describe 'pizza_profile::kid_pizza' do
           { :age => 3 }
         end
 
+        it_behaves_like 'a kid pizza'
+
         it { is_expected.to contain_crust('namevar/medium_wholesome_thin_crust')
           .with('size'   => '10')
         }
@@ -37,6 +70,9 @@ describe 'pizza_profile::kid_pizza' do
         let(:params) do
           { :age => 7 }
         end
+
+        it_behaves_like 'a kid pizza'
+
         it { is_expected.to contain_crust('namevar/medium_wholesome_thin_crust')
           .with('size'   => '20')
         }
@@ -54,41 +90,20 @@ describe 'pizza_profile::kid_pizza' do
         let(:params) do
           {}
         end
-        it { is_expected.to compile }
-
-        it { is_expected.to contain_class('Settings')
-        }
-        
-        it { is_expected.to contain_pizza_profile__kid_pizza('namevar')
-          .with('age'    => '12')
-          .with('dough'  => 'white')
-          .with('cheese' => 'mozzarella')
-        }
+        it_behaves_like 'a kid pizza'
         
         it { is_expected.to contain_crust('namevar/medium_wholesome_thin_crust')
-          .with('ensure' => 'baked')
           .with('size'   => '30')
-          .with('type'   => 'thin')
-          .with('dough'  => 'wholesome')
-          .that_comes_before('Tomato_sauce[namevar/thick_cristal]')
         }
         
         it { is_expected.to contain_tomato_sauce('namevar/thick_cristal')
-          .with('ensure'    => 'present')
-          .with('type'      => 'cristal')
-          .with('composure' => 'thick')
           .with('amount'    => '6')
-          .that_comes_before('Cheese[namevar/a_lot_of_mozzarella]')
         }
         
         it { is_expected.to contain_cheese('namevar/a_lot_of_mozzarella')
-          .with('ensure' => 'present')
-          .with('type'   => 'mozzarella')
           .with('amount' => '5')
         }
       end
-
-
     end
   end
 end
