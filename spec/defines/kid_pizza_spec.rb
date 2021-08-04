@@ -44,6 +44,7 @@ describe 'pizza_profile::kid_pizza' do
         let(:params) do
           { :age => 1 }
         end
+        it { is_expected.to compile.and_raise_error(/probably not wise to order a pizza for a kid of 1./) }
       end
 
       context 'kids between 2 and 5' do
@@ -90,6 +91,7 @@ describe 'pizza_profile::kid_pizza' do
         let(:params) do
           {}
         end
+
         it_behaves_like 'a kid pizza'
         
         it { is_expected.to contain_crust('namevar/medium_wholesome_thin_crust')
