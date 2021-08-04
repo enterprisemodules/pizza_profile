@@ -12,7 +12,8 @@ describe 'pizza_profile::kid_pizza' do
     context "on #{os}" do
       let(:facts) { os_facts }
 
-      it { is_expected.to compile }
+      # it { is_expected.to compile }
+      it { dump_catalog }
     end
   end
 end
