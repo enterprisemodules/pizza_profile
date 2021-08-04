@@ -59,4 +59,5 @@ extra_gemfiles.each do |gemfile|
     eval(File.read(gemfile), binding)
   end
 end
+gem 'puppet-catalog_rspec'
 # vim: syntax=ruby

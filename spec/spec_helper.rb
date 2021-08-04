@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'puppet-catalog_rspec'
+
 RSpec.configure do |c|
   c.mock_with :rspec
 end
