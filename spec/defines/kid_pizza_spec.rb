@@ -19,14 +19,35 @@ describe 'pizza_profile::kid_pizza' do
         let(:params) do
           { :age => 3 }
         end
-        it { is_expected.to compile }
+
+        it { is_expected.to contain_crust('namevar/medium_wholesome_thin_crust')
+          .with('size'   => '10')
+        }
+        
+        it { is_expected.to contain_tomato_sauce('namevar/thick_cristal')
+          .with('amount'    => '4')
+        }
+        
+        it { is_expected.to contain_cheese('namevar/a_lot_of_mozzarella')
+          .with('amount' => '4')
+        }
       end
 
       context 'kids between 5 and 8' do
         let(:params) do
           { :age => 7 }
         end
-        it { is_expected.to compile }
+        it { is_expected.to contain_crust('namevar/medium_wholesome_thin_crust')
+          .with('size'   => '20')
+        }
+        
+        it { is_expected.to contain_tomato_sauce('namevar/thick_cristal')
+          .with('amount'    => '5')
+        }
+        
+        it { is_expected.to contain_cheese('namevar/a_lot_of_mozzarella')
+          .with('amount' => '5')
+        }
       end
 
       context 'kids older then 8 (default case)' do
