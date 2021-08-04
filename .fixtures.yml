@@ -3,4 +3,5 @@
 ---
 fixtures:
   forge_modules:
-#     stdlib: "puppetlabs/stdlib"
+    pizza:     "enterprisemodules/pizza"
+    easy_type: "enterprisemodules/easy_type"
